@@ -119,7 +119,7 @@ export default function GalleryGrid({ items }: { items: GalleryItem[] }) {
       <dialog
         ref={dialogRef}
         onClose={() => setActive(null)}
-        className="fixed inset-0 m-0 h-full max-h-none w-full max-w-none overflow-hidden overscroll-contain bg-transparent p-0 backdrop:bg-ink/90"
+        className="fixed inset-0 m-0 h-full max-h-none w-full max-w-none bg-transparent p-0 backdrop:bg-ink/90"
       >
         {current && (
           <div
@@ -130,18 +130,11 @@ export default function GalleryGrid({ items }: { items: GalleryItem[] }) {
             onTouchEnd={onTouchEnd}
             className="flex h-full w-full touch-pan-y flex-col items-center justify-center gap-4 p-6"
           >
-            <div
-              style={{
-                width: `min(100%, ${(75 * current.width) / current.height}dvh)`,
-                aspectRatio: `${current.width} / ${current.height}`,
-              }}
-            >
-              <Media
-                item={current}
-                sizes="90vw"
-                className="h-full w-full rounded-2xl object-cover"
-              />
-            </div>
+            <Media
+              item={current}
+              sizes="90vw"
+              className="h-[75vh] w-auto max-w-full rounded-2xl object-contain"
+            />
             {current.caption && (
               <p className="font-display text-xl text-white">
                 {current.caption}
