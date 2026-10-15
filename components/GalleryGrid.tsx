@@ -97,19 +97,19 @@ export default function GalleryGrid({ items }: { items: GalleryItem[] }) {
 
   return (
     <>
-      <ul className="columns-2 gap-4 md:columns-3 lg:gap-6 w-full min-w-0 max-w-full">
+      <ul className="columns-2 gap-4 md:columns-3 lg:gap-6">
         {items.map((item, i) => (
           <li key={item.id} className="mb-4 break-inside-avoid lg:mb-6">
             <button
               type="button"
               onClick={() => open(i)}
               aria-label={`View larger: ${item.caption ?? `photo ${i + 1}`}`}
-              className="group block w-full min-w-0 max-w-full overflow-hidden rounded-2xl"
+              className="group block w-full overflow-hidden rounded-2xl"
             >
               <Media
                 item={item}
                 sizes="(min-width: 768px) 33vw, 50vw"
-                className="block h-auto w-full max-w-full transition-transform duration-500 group-hover:scale-105"
+                className="h-auto w-full transition-transform duration-500 group-hover:scale-105"
               />
             </button>
           </li>
@@ -119,7 +119,7 @@ export default function GalleryGrid({ items }: { items: GalleryItem[] }) {
       <dialog
         ref={dialogRef}
         onClose={() => setActive(null)}
-        className="fixed inset-0 m-0 box-border h-dvh max-h-none w-screen max-w-none overflow-hidden overscroll-none bg-transparent p-0 backdrop:bg-ink/90"
+        className="fixed inset-0 m-0 h-full max-h-none w-full max-w-none overflow-hidden overscroll-contain bg-transparent p-0 backdrop:bg-ink/90"
       >
         {current && (
           <div
@@ -128,27 +128,22 @@ export default function GalleryGrid({ items }: { items: GalleryItem[] }) {
             }}
             onTouchStart={onTouchStart}
             onTouchEnd={onTouchEnd}
-            className="absolute inset-0 box-border flex flex-col items-center justify-center gap-4 overflow-hidden p-4 sm:p-6"
+            className="flex h-full w-full touch-pan-y flex-col items-center justify-center gap-4 p-6"
           >
             <div
-              className="relative min-h-0 min-w-0 max-w-full shrink"
               style={{
-                width: `min(calc(100vw - 2rem), ${
-                  (75 * current.width) / current.height
-                }dvh)`,
+                width: `min(100%, ${(75 * current.width) / current.height}dvh)`,
                 aspectRatio: `${current.width} / ${current.height}`,
-                maxHeight: "75dvh",
               }}
             >
               <Media
                 item={current}
-                sizes="(max-width: 639px) calc(100vw - 32px), (max-width: 767px) calc(100vw - 48px), 90vw"
-                className="block h-full w-full rounded-2xl object-contain"
+                sizes="90vw"
+                className="h-full w-full rounded-2xl object-cover"
               />
             </div>
-
             {current.caption && (
-              <p className="max-w-full wrap-break-word text-center font-display text-xl text-white">
+              <p className="font-display text-xl text-white">
                 {current.caption}
               </p>
             )}
