@@ -1,0 +1,18 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-bloom: #ea44d4;
+  --color-cherry: #dd3027;
+  --color-plum: #733d6f;
+  --color-iris: #5848b3;
+  --color-cream: #fff8f5;
+  --color-ink: #2a1f2d;
+
+  --font-display: var(--font-playfair);
+  --font-sans: var(--font-inter);
+}
+
+body {
+  background: var(--color-cream);
+  color: var(--color-ink);
+}
