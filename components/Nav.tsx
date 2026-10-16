@@ -14,7 +14,7 @@ const links = [
 
 export default function Nav() {
   const [isOpen, setIsOpen] = useState(false);
-  const [closeInstantly, setCloseInstantly] = useState(false);
+  const [closeInstantly, setCloseInstantly] = useState(true);
 
   const navRef = useRef<HTMLElement>(null);
 
@@ -34,7 +34,7 @@ export default function Nav() {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 768) {
+      if (window.innerWidth >= 640) {
         setCloseInstantly(true);
         setIsOpen(false);
       }
