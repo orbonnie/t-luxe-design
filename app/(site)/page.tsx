@@ -65,13 +65,13 @@ export default function Home() {
         <div className="aspect-4/5 rounded-3xl bg-plum/15" />
         <div>
           <h2 className="font-display text-4xl text-plum">{about.heading}</h2>
-          <div className="mt-2 h-1 w-16 rounded bg-bloom" />
+          <div className="mt-2 h-1 w-16 rounded bg-cherry" />
           <p className="mt-6 leading-relaxed opacity-80">{about.body}</p>
         </div>
       </section>
 
       {/* Testimonials */}
-      <section className="mt-28 bg-iris py-20 text-white">
+      <section className="mt-28 bg-iris py-20 text-powder">
         <div className="mx-auto max-w-6xl px-6">
           <h2 className="text-center font-display text-4xl">Kind Words</h2>
           <div className="mt-12 grid gap-8 md:grid-cols-3">
