@@ -104,7 +104,7 @@ export default function GalleryGrid({ items }: { items: GalleryItem[] }) {
               type="button"
               onClick={() => open(i)}
               aria-label={`View larger: ${item.caption ?? `photo ${i + 1}`}`}
-              className="group block w-full overflow-hidden rounded-2xl"
+              className="group block w-full overflow-hidden rounded-2xl border border-champagne"
             >
               <Media
                 item={item}

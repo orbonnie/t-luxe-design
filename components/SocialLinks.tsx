@@ -14,7 +14,7 @@ export default function SocialLinks({
             target="_blank"
             rel="noopener noreferrer"
             aria-label={name}
-            className="text-plum transition-colors hover:text-bloom"
+            className="text-plum transition-colors hover:text-cherry"
           >
             <Icon size={22} />
           </a>

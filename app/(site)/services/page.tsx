@@ -2,7 +2,7 @@ import Link from "next/link";
 import PageHeader from "@/components/PageHeader";
 
 const intro =
-  "Placeholder intro about what T Luxe offers. Every design is customized to your event.";
+  "Placeholder intro about what T-Luxe offers. Every design is customized to your event.";
 
 const services = [
   {
@@ -39,7 +39,7 @@ export default function ServicesPage() {
         {services.map((s) => (
           <article
             key={s.name}
-            className="overflow-hidden rounded-3xl border border-plum/10 bg-white"
+            className="overflow-hidden rounded-3xl border border-champagne bg-iris/10"
           >
             <div className="aspect-video bg-linear-to-br from-bloom/30 to-iris/30" />
             <div className="p-8">
@@ -61,7 +61,7 @@ export default function ServicesPage() {
         </p>
         <Link
           href="/contact"
-          className="mt-6 inline-block rounded-full bg-bloom px-8 py-3 text-sm uppercase tracking-widest text-white transition-colors hover:bg-cherry"
+          className="mt-6 inline-block rounded-full bg-bloom/90 px-8 py-3 text-sm uppercase tracking-widest text-white transition-colors hover:bg-iris/90"
         >
           Request a Quote
         </Link>

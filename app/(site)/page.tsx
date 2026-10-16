@@ -1,9 +1,10 @@
+import Image from "next/image";
 import Link from "next/link";
 
 const hero = {
   heading: "Balloons & Events, Elevated",
   subheading: "Sophisticated styling with a playful pop.",
-  image: "/t-luxe-hero.jpg",
+  image: "/gold-balloons.png",
 };
 
 const about = {
@@ -34,7 +35,17 @@ export default function Home() {
     <main>
       {/* Hero */}
       <section className="mx-auto max-w-6xl px-6 pt-16">
-        <div className="aspect-16/7 w-full rounded-3xl bg-linear-to-br from-bloom via-plum to-iris" />
+        <div className="relative aspect-16/7 w-full overflow-hidden rounded-3xl bg-linear-to-br from-bloom via-plum to-iris">
+          <Image
+            src={hero.image}
+            alt="T Luxe balloon and event decor"
+            fill
+            priority
+            sizes="(min-width: 1152px) 1152px, 100vw"
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-linear-to-br from-bloom/10 via-plum/30 to-iris/40" />
+        </div>
         <div className="mx-auto mt-12 max-w-2xl text-center">
           <h1 className="font-display text-5xl leading-tight text-plum md:text-6xl">
             {hero.heading}
