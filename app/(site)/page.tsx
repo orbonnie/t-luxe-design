@@ -53,7 +53,7 @@ export default function Home() {
           <p className="mt-4 text-lg opacity-80">{hero.subheading}</p>
           <Link
             href="/gallery"
-            className="mt-8 inline-block rounded-full bg-bloom px-8 py-3 text-sm uppercase tracking-widest text-white transition-colors hover:bg-cherry"
+            className="mt-8 inline-block rounded-full bg-bloom/90 px-8 py-3 text-sm uppercase tracking-widest text-white transition-colors hover:bg-iris/90"
           >
             View Our Work
           </Link>
