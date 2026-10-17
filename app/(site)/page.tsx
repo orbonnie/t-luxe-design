@@ -41,6 +41,7 @@ export default async function Home() {
   });
 
   const homepageData = data as HomepageData | null;
+
   const heroImage = homepageData?.heroImageUrl ?? "/gold-balloons.png";
   const heroHeading =
     homepageData?.heroHeading ?? "Balloons & Events, Elevated";

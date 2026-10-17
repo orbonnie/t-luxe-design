@@ -1,39 +1,48 @@
+import { sanityFetch } from "../../../sanity/lib/live";
+import { groq } from "next-sanity";
 import Link from "next/link";
 import PageHeader from "@/components/PageHeader";
 
-const intro =
-  "Placeholder intro about what T-Luxe offers. Every design is customized to your event.";
+type Service = {
+  name: string;
+  description?: string;
+  price?: string;
+  image?: string;
+};
 
-const services = [
-  {
-    name: "Balloon Garland",
-    description:
-      "Organic or spiral garland in your colors, sized to your backdrop or entryway.",
-    price: "Starting at $150",
-  },
-  {
-    name: "Balloon Arch",
-    description:
-      "A statement arch for entrances, photo ops, or dessert tables.",
-    price: "Starting at $250",
-  },
-  {
-    name: "Table Centerpieces",
-    description: "Balloon and floral-accent centerpieces sold by the table.",
-    price: "Starting at $35 each",
-  },
-  {
-    name: "Full Event Styling",
-    description:
-      "Complete decor design, delivery, setup, and breakdown for your event.",
-    price: "Custom quote",
-  },
-];
+const servicesQuery = groq`
+  *[_type == "services"][0]{
+    "servicesHeading": heading,
+    "servicesIntro": introText,
+    "services": serviceList[] {
+      name,
+      description,
+      price,
+      "src": image.asset->url
+    }
+  }
+`;
 
-export default function ServicesPage() {
+type servicesData = {
+  servicesHeading: string | null;
+  servicesIntro: string | null;
+  services: Service[] | null;
+};
+
+export default async function ServicesPage() {
+  const { data } = await sanityFetch({
+    query: servicesQuery,
+  });
+
+  const servicesData = (data as servicesData) || null;
+
+  const servicesHeading = servicesData?.servicesHeading ?? "Placeholder";
+  const servicesIntro = servicesData?.servicesIntro ?? "Placeholder";
+  const services = servicesData?.services ?? [];
+
   return (
     <main className="pb-8">
-      <PageHeader title="Services" intro={intro} />
+      <PageHeader title={servicesHeading} intro={servicesIntro} />
 
       <section className="mx-auto mt-16 grid max-w-6xl gap-8 px-6 md:grid-cols-2">
         {services.map((s) => (
@@ -44,8 +53,10 @@ export default function ServicesPage() {
             <div className="aspect-video bg-linear-to-br from-bloom/30 to-iris/30" />
             <div className="p-8">
               <div className="flex items-baseline justify-between gap-4">
-                <h2 className="font-display text-2xl text-plum">{s.name}</h2>
-                <p className="shrink-0 text-sm uppercase tracking-widest text-bloom">
+                <h2 className="font-display text-plum text-[clamp(1.25rem,0.9rem+1vw,1.5rem)]">
+                  {s.name}
+                </h2>
+                <p className="shrink-0 text-[clamp(0.75rem,0.667rem+0.333vw,0.875rem)] uppercase tracking-widest text-bloom">
                   {s.price}
                 </p>
               </div>

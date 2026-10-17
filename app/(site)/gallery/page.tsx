@@ -1,7 +1,27 @@
+import { sanityFetch } from "../../../sanity/lib/live";
+import { groq } from "next-sanity";
 import PageHeader from "@/components/PageHeader";
 import GalleryGrid, { type GalleryItem } from "@/components/GalleryGrid";
 
-const intro = "A look at recent work. Placeholder intro text goes here.";
+const galleryQuery = groq`
+  *[_type == "gallery"][0] {
+    "galleryHeading": heading,
+    "galleryIntro": introText,
+    "galleryItems": galleryItems[] {
+      "id": _key,
+      "src": image.asset->url,
+      caption,
+      "width": image.asset->metadata.dimensions.width,
+      "height": image.asset->metadata.dimensions.height
+    }
+  }
+`;
+
+type galleryData = {
+  galleryHeading: string | null;
+  galleryIntro: string | null;
+  galleryItems: GalleryItem[] | null;
+};
 
 // Mixed shapes on purpose, so you can see the masonry layout working
 const items: GalleryItem[] = [
@@ -16,12 +36,22 @@ const items: GalleryItem[] = [
   { id: "9", caption: "Graduation", width: 1200, height: 800 },
 ];
 
-export default function Gallery() {
+export default async function Gallery() {
+  const { data } = await sanityFetch({
+    query: galleryQuery,
+  });
+
+  const galleryData = data as galleryData | null;
+
+  const galleryHeading = galleryData?.galleryHeading ?? "Placeholder";
+  const galleryIntro = galleryData?.galleryIntro ?? "Placeholder";
+  const galleryItems = galleryData?.galleryItems ?? items;
+
   return (
     <main className="pb-8">
-      <PageHeader title="Gallery" intro={intro} />
+      <PageHeader title={galleryHeading} intro={galleryIntro} />
       <section className="mx-auto mt-16 max-w-6xl px-6">
-        <GalleryGrid items={items} />
+        <GalleryGrid items={galleryItems} />
       </section>
     </main>
   );

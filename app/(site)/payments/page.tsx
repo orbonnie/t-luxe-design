@@ -1,51 +1,51 @@
+import { sanityFetch } from "../../../sanity/lib/live";
+import { groq } from "next-sanity";
 import PageHeader from "@/components/PageHeader";
 import CopyButton from "@/components/CopyButton";
+
+const paymentQuery = groq`
+  *[_type == "paymentMethods"][0] {
+    "paymentHeading": heading,
+    "paymentIntro": intro,
+    "paymentMethods": methods[] {
+      name,
+      link,
+      handle,
+      note
+    }
+  }
+`;
 
 type PaymentMethod = {
   name: string;
   handle?: string; // shown on the page, and copied if there's no link
-  href?: string; // if present, renders a "Pay" button
+  link?: string; // if present, renders a "Pay" button
   note?: string;
 };
 
-const intro =
-  "Placeholder intro about how to pay. Choose whichever method is easiest for you.";
+type PaymentData = {
+  paymentHeading: string;
+  paymentIntro: string;
+  paymentMethods: PaymentMethod[] | null;
+};
 
-const methods: PaymentMethod[] = [
-  {
-    name: "Venmo",
-    handle: "@REPLACE_ME",
-    href: "https://venmo.com/u/REPLACE_ME",
-  },
-  {
-    name: "Cash App",
-    handle: "$REPLACE_ME",
-    href: "https://cash.app/$REPLACE_ME",
-  },
-  {
-    name: "PayPal",
-    handle: "paypal.me/REPLACE_ME",
-    href: "https://paypal.me/REPLACE_ME",
-  },
-  {
-    name: "Zelle",
-    handle: "REPLACE_ME@email.com",
-    note: "Send from your bank’s app using this email or phone number.",
-  },
-  {
-    name: "Apple Pay",
-    handle: "(000) 000-0000",
-    note: "Send with Apple Cash through the Messages app.",
-  },
-];
+export default async function PaymentPage() {
+  const { data } = await sanityFetch({
+    query: paymentQuery,
+  });
 
-export default function PaymentPage() {
+  const paymentData = (data as PaymentData) || null;
+
+  const paymentHeading = paymentData?.paymentHeading ?? "Placeholder";
+  const paymentIntro = paymentData?.paymentIntro ?? "Placeholder";
+  const paymentMethods = paymentData?.paymentMethods ?? [];
+
   return (
     <main className="pb-8">
-      <PageHeader title="Payment" intro={intro} />
+      <PageHeader title={paymentHeading} intro={paymentIntro} />
 
       <ul className="mx-auto mt-16 max-w-3xl space-y-4 px-6">
-        {methods.map((m) => (
+        {paymentMethods.map((m) => (
           <li
             key={m.name}
             className="flex flex-col gap-4 rounded-2xl border border-champagne bg-iris/10 p-6 sm:flex-row sm:items-center sm:justify-between"
@@ -56,12 +56,12 @@ export default function PaymentPage() {
               {m.note && <p className="mt-1 text-sm opacity-60">{m.note}</p>}
             </div>
 
-            {m.href ? (
+            {m.link ? (
               <a
-                href={m.href}
+                href={m.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-full bg-bloom/90 px-6 py-2.5 text-center text-xs uppercase tracking-widest text-white transition-colors hover:bg-iris/90 hover:border hover:border-white"
+                className="rounded-full bg-bloom/80 px-6 py-2.5 text-center text-xs uppercase tracking-widest text-white transition-colors hover:bg-iris/90 hover:border hover:border-white"
               >
                 Pay with {m.name}
               </a>

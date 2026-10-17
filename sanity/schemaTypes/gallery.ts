@@ -5,6 +5,12 @@ export default defineType({
   title: "Gallery",
   type: "document",
   fields: [
+    defineField({
+      name: "title",
+      title: "Document Title",
+      type: "string",
+      initialValue: "Gallery",
+    }),
     defineField({ name: "heading", title: "Heading", type: "string" }),
     defineField({ name: "introText", title: "Intro Text", type: "text" }),
     defineField({
