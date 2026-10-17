@@ -50,7 +50,7 @@ export default function Nav() {
   return (
     <header
       ref={navRef}
-      className="relative z-50 border-b border-champagne bg-iris/10"
+      className="sticky top-0 z-50 border-b border-champagne bg-[#EBEAF3]"
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-2">
         <Link

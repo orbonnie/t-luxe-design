@@ -6,6 +6,12 @@ export default defineType({
   type: "document",
   fields: [
     defineField({
+      name: "title",
+      title: "Document Title",
+      type: "string",
+      initialValue: "Homepage",
+    }),
+    defineField({
       name: "heroImage",
       title: "Hero Image",
       type: "image",
